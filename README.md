@@ -13,7 +13,7 @@ The project supports full CRUD operations, role-based authorization, and uses Mo
 - CRUD operations for task management
 - Clean layered architecture
 - MongoDB Atlas (Cloud Database)
-- JWT-based authentication (planned)
+- JWT-based authentication 
 
 ---
 
