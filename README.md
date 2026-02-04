@@ -92,7 +92,6 @@ mvn spring-boot:run
 
 ## 🔮 Future Improvements
 
-- JWT-based authentication
 - DTO implementation
 - Global exception handling
 - API documentation (Swagger)
