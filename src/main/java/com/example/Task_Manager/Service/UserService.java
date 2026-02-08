@@ -2,6 +2,8 @@ package com.example.Task_Manager.Service;
 
 import com.example.Task_Manager.Entity.Task;
 import com.example.Task_Manager.Entity.User;
+import com.example.Task_Manager.Exceptions.ResourceNotFoundException;
+import com.example.Task_Manager.Exceptions.UserAlreadyExistsException;
 import com.example.Task_Manager.Repository.Task_Repository;
 import com.example.Task_Manager.Repository.User_Repository;
 import org.bson.types.ObjectId;
@@ -26,9 +28,13 @@ public class UserService {
 
     private static final PasswordEncoder password_encoder = new BCryptPasswordEncoder();
     public void CreateUser(User user){
-        user.setPassword(password_encoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
-        user_repository.save(user);
+        if(user_repository.existsById(user.getUsername())){
+            throw new UserAlreadyExistsException("Username already taken");
+        }else {
+            user.setPassword(password_encoder.encode(user.getPassword()));
+            user.setRoles(Arrays.asList("USER"));
+            user_repository.save(user);
+        }
     }
 
     public List<User> getAll(){
@@ -40,12 +46,18 @@ public class UserService {
     }
 
     public User findByusername(String username){
-        return user_repository.findByusername(username);
+     User user = user_repository.findByusername(username);
+
+     if(user == null){
+         throw new ResourceNotFoundException("User not found with username: " +username);
+     }else{
+         return user;
+     }
+
     }
 
     public void DeleteUser(User user){
         List<Task> user_tasks = user.getTask();
-
         user_repository.delete(user);
     }
 

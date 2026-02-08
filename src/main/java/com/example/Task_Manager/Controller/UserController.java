@@ -50,15 +50,13 @@ public class UserController {
     }
 
     @GetMapping("/get-my-tasks")
-    public ResponseEntity<?> GetUserSpecificTask(){
+    public List<Task> GetUserSpecificTask(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         List<Task> spec_task =  taskService.Specific_task(username);
-        if(!spec_task.isEmpty()){
-            return new ResponseEntity<>(spec_task, HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
+            return spec_task;
+
     }
 
     @DeleteMapping("/Delete-my-tasks/{id}")

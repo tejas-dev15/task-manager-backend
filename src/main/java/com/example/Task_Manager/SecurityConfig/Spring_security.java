@@ -26,7 +26,7 @@ public class Spring_security {
     private JwtFilter jwtFilter;
 
     private final UserDetailsServiceImpl userDetailsService;
-    
+
     public Spring_security(UserDetailsServiceImpl userDetailsService){
         this.userDetailsService = userDetailsService;
     }
@@ -35,9 +35,8 @@ public class Spring_security {
          return http
                  .authorizeHttpRequests(request -> request
                          .requestMatchers("/User/**", "/Task/**").authenticated()
-                         .requestMatchers("/public/**").permitAll()
                          .requestMatchers("/admin/**").hasRole("ADMIN")
-                         .anyRequest().authenticated())
+                         .anyRequest().permitAll())
                  .csrf(AbstractHttpConfigurer::disable)
                  .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                  .build();

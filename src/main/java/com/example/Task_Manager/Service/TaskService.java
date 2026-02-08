@@ -2,6 +2,7 @@ package com.example.Task_Manager.Service;
 
 import com.example.Task_Manager.Entity.Task;
 import com.example.Task_Manager.Entity.User;
+import com.example.Task_Manager.Exceptions.ResourceNotFoundException;
 import com.example.Task_Manager.Repository.Task_Repository;
 import com.example.Task_Manager.Repository.User_Repository;
 import org.bson.types.ObjectId;
@@ -40,13 +41,19 @@ public class TaskService {
     }
     public List<Task> Specific_task(String username){
         User user = user_repository.findByusername(username);
-        return user.getTask();
+        if(user.getTask().isEmpty()){
+            throw new ResourceNotFoundException("You didn't Created any Tasks");
+        }else{
+            return user.getTask();
+        }
     }
     public void DeleteById(ObjectId id){
         task_repository.deleteById(String.valueOf(id));
     }
 
-    public Optional<Task> findById(ObjectId id){
-       return  task_repository.findById(String.valueOf(id));
+    public Optional<Task> findById(ObjectId id) {
+        return Optional.ofNullable(task_repository.findById(String.valueOf(id))
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Task not found by id : " + id)));
     }
 }

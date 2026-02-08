@@ -5,6 +5,7 @@ import com.example.Task_Manager.Repository.Task_Repository;
 import com.example.Task_Manager.Service.TaskService;
 import com.example.Task_Manager.Service.UserService;
 import com.example.Task_Manager.Utility.JwtUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +43,7 @@ public class PublicController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> Signup(@RequestBody User user){
+    public ResponseEntity<?> Signup( @Valid @RequestBody User user){
         if(user !=null){
             userService.CreateUser(user);
             return new ResponseEntity<>(HttpStatus.CREATED);

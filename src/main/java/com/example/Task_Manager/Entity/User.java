@@ -1,5 +1,6 @@
 package com.example.Task_Manager.Entity;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -17,9 +18,9 @@ import java.util.List;
 public class User {
    private String ObjectId;
    @Id
-   @NonNull
+   @NotBlank(message =  "Username cannot be empty")
    private String username;
-   @NonNull
+   @NotBlank(message = "Password cannot be empty")
    private String password;
    @DBRef
    private List<Task> task = new ArrayList<>();
