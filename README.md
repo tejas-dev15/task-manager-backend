@@ -13,7 +13,8 @@ The project supports full CRUD operations, role-based authorization, and uses Mo
 - CRUD operations for task management
 - Clean layered architecture
 - MongoDB Atlas (Cloud Database)
-- JWT-based authentication 
+- JWT-based authentication
+- Global Exception Handling
 
 ---
 
@@ -93,7 +94,6 @@ mvn spring-boot:run
 ## 🔮 Future Improvements
 
 - DTO implementation
-- Global exception handling
 - API documentation (Swagger)
 
 ---
